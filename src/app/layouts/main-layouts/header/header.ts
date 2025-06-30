@@ -22,6 +22,13 @@ export class Header {
   isBrowser: boolean = false;
   selectedCategory: string = '';
   searchTerm: string = '';
+  categoryDropdownVisible = false;
+  isActive = false;
+
+  isMobileMenuActive: boolean = false;
+  activeIndex: any | null = null;
+  windowWidth: number = 0;
+
   constructor(private router: Router) {}
 
   categories: Select2Data = [
@@ -38,9 +45,93 @@ export class Header {
     { value: 'icecream', label: 'Ice Cream' },
   ];
 
+  categorie = [
+    {
+      name: 'Vegetables',
+      icon: 'assets/images/icon/category-1.png',
+      route: 'shop',
+    },
+    {
+      name: 'Milk & Cake',
+      icon: 'assets/images/icon/category-2.png',
+      route: 'shop',
+    },
+    {
+      name: 'Grocery',
+      icon: 'assets/images/icon/category-3.png',
+      route: 'shop',
+    },
+    {
+      name: 'Beauty',
+      icon: 'assets/images/icon/category-4.png',
+      route: 'shop',
+    },
+    {
+      name: 'Wines & Drinks',
+      icon: 'assets/images/icon/category-5.png',
+      route: 'shop',
+    },
+    {
+      name: 'Snacks',
+      icon: 'assets/images/icon/category-6.png',
+      route: 'shop',
+    },
+    { name: 'Juice', icon: 'assets/images/icon/category-7.png', route: 'shop' },
+    {
+      name: 'Fruits',
+      icon: 'assets/images/icon/category-8.png',
+      route: 'shop',
+    },
+    {
+      name: 'Tea & Coffee',
+      icon: 'assets/images/icon/category-9.png',
+      route: 'shop',
+    },
+  ];
+
   onSearch() {
     console.log('Search term:', this.searchTerm);
     console.log('Selected category:', this.selectedCategory);
     // Add your search logic here
+  }
+
+  toggleCategoryDropdown() {
+    this.isActive = !this.isActive;
+    this.categoryDropdownVisible = !this.categoryDropdownVisible;
+  }
+
+  isParentActive(routes: string[]): boolean {
+    const currentUrl = this.router.url;
+    return routes.some((route) =>
+      route !== '/' ? currentUrl.startsWith(route) : currentUrl === route
+    );
+  }
+
+  isRouteActive(route: string): boolean {
+    return this.router.url === route;
+  }
+
+  openMobileMenu() {
+    this.isMobileMenuActive = true;
+    document.body.classList.add('scroll-hide-sm');
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuActive = false;
+    document.body.classList.remove('scroll-hide-sm');
+  }
+
+  onResize() {
+    this.windowWidth = window.innerWidth;
+  }
+
+  toggleSubmenu(index: string) {
+    if (this.windowWidth < 992) {
+      if (this.activeIndex === index) {
+        this.activeIndex = null;
+      } else {
+        this.activeIndex = index;
+      }
+    }
   }
 }
