@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 import { RouterLink } from '@angular/router';
+import { productService } from '../../services/product.service';
+import { ProductInterface, RecommendedProduct } from '../../models';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-index',
   imports: [CommonModule, SlickCarouselModule, RouterLink],
@@ -449,10 +453,23 @@ export class Index {
       badgeClass: 'bg-warning-600 px-8 py-4 text-sm text-white',
     },
   ];
+  productsFromService: ProductInterface[] = [];
+  recommendedProductsFromService: RecommendedProduct[] = [];
 
-  constructor() {}
 
-  ngOnInit(): void {}
+  constructor(private productService: productService) {}
+
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe((products: ProductInterface[]) => {
+      this.productsFromService = products;
+      console.log('this.productsFromService >> ', this.productsFromService);
+    });
+    this.productService.getRecommendedProducts().subscribe((products: RecommendedProduct[]) => {
+      this.recommendedProductsFromService = products;
+      console.log('this.recommendedProductsFromService >> ', this.recommendedProductsFromService);
+    });
+  }
 
   // flashsale
   flashSales = [
