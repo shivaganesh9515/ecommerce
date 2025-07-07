@@ -171,7 +171,7 @@ export class Index {
       animationDelay: 1000,
     },
   ];
-
+/* 
   products = [
     {
       name: 'Taylor Farms Broccoli Florets Vegetables',
@@ -250,7 +250,7 @@ export class Index {
       fadeDuration: 200,
       total: 35,
     },
-  ];
+  ]; */
 
   productSlideConfig = {
     slidesToShow: 6,
@@ -310,7 +310,7 @@ export class Index {
       },
     ],
   };
-
+/* 
   recomandedProducts = [
     {
       title: 'C-500 Antioxidant Protect Dietary Supplement',
@@ -452,9 +452,9 @@ export class Index {
       badge: 'New',
       badgeClass: 'bg-warning-600 px-8 py-4 text-sm text-white',
     },
-  ];
-  productsFromService: ProductInterface[] = [];
-  recommendedProductsFromService: RecommendedProduct[] = [];
+  ]; */
+  products: ProductInterface[] = [];
+  recomandedProducts: RecommendedProduct[] = [];
 
 
   constructor(private productService: productService) {}
@@ -462,12 +462,12 @@ export class Index {
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((products: ProductInterface[]) => {
-      this.productsFromService = products;
-      console.log('this.productsFromService >> ', this.productsFromService);
+      this.products = products;
+      console.log('this.products >> ', this.products);
     });
     this.productService.getRecommendedProducts().subscribe((products: RecommendedProduct[]) => {
-      this.recommendedProductsFromService = products;
-      console.log('this.recommendedProductsFromService >> ', this.recommendedProductsFromService);
+      this.recomandedProducts = products;
+      console.log('this.recommendedProductsFromService >> ', this.recomandedProducts);
     });
   }
 
